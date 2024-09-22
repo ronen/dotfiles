@@ -1,12 +1,18 @@
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-bindkey -v
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
 zstyle :compinstall filename '/home/ronen/.zshrc'
-
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
+
+source ~/.alias
+
+if [ -x $(command -v systemd-path) ]; then
+   PATH="$(systemd-path user-binaries):${PATH}"
+else
+   PATH="$HOME/.local/bin:${PATH}"
+fi
+
+if [ -x $(command -v starship) ]; then
+    eval "$(starship init zsh)"
+fi
