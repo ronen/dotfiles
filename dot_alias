@@ -1,4 +1,4 @@
-alias d=dirs
+alias d='dirs -v'
 alias g=git
 alias pu=pushd
 alias po=popd
