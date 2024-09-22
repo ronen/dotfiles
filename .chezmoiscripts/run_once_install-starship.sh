@@ -1,4 +1,4 @@
 #!/bin/sh
 if ! command -v starship >/dev/null 2>&1; then 
-    curl -fsSL https://starship.rs/install.sh | sudo sh -s -- --yes
+    curl -fsSL https://starship.rs/install.sh | sudo sh -s -- --yes > /dev/null
 fi
