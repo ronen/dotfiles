@@ -1,3 +1,4 @@
+alias d=dirs
 alias g=git
 alias pu=pushd
 alias po=popd
