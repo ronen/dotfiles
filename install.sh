@@ -3,6 +3,7 @@ set -e
 
 github_user=ronen
 
+cd $HOME
 if command -v chezmoi >/dev/null; then
   chezmoi init --apply "${github_user}"
 else
