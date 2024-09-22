@@ -1,0 +1,11 @@
+[credential]
+	credentialStore = secretservice
+	helper = 
+	helper = /usr/local/bin/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[user]
+	email = ronen@barzel.org
+	name = ronen barzel
+[includeIf "hasconfig:remote.*.url:https://github.com/drawbridgelabs/**"]
+	path = "./drawbridge-config"
