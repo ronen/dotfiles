@@ -1,5 +1,0 @@
-[user]
-	email = ronen@barzel.org
-	name = ronen barzel
-[includeIf "hasconfig:remote.*.url:https://github.com/drawbridgelabs/**"]
-	path = "./drawbridge-config"
