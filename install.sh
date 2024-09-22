@@ -9,3 +9,7 @@ else
   # downloads and installs chezmoi into .local/bin
   sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply "${github_user}"
 fi
+
+if [ -x -v /usr/bin/zsh ]; then
+  sudo chsh -s /usr/bin/zsh "${USER}"
+fi
