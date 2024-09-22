@@ -7,12 +7,8 @@ compinit
 
 source ~/.alias
 
-if [ -x $(command -v systemd-path) ]; then
-   PATH="$(systemd-path user-binaries):${PATH}"
-else
-   PATH="$HOME/.local/bin:${PATH}"
-fi
+PATH="$HOME/.local/bin:${PATH}"
 
-if [ -x $(command -v starship) ]; then
+if [ -x $(command -v starship >& /dev/null) ]; then
     eval "$(starship init zsh)"
 fi
