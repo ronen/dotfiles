@@ -1,0 +1,7 @@
+if [ -x "$(command -v highlight)" ]; then
+    export LESS="-RX"
+    export LESSOPEN="| highlight -O xterm256 %s"
+else
+    export LESS="-X"
+    export LESSOPEN=
+fi
