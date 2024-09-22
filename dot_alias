@@ -1,0 +1,4 @@
+alias g=git
+alias pu=pushd
+alias po=popd
+alias lf='ls --color -F'
