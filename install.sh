@@ -10,6 +10,6 @@ else
   sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply "${github_user}"
 fi
 
-if [ -x -v /usr/bin/zsh ]; then
+if [ -x /usr/bin/zsh ]; then
   sudo chsh -s /usr/bin/zsh "${USER}"
 fi
