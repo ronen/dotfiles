@@ -22,8 +22,8 @@ function find_brew() {
 }
 
 if ! command -v highlight >/dev/null 2>&1; then 
-    brew_path=$(find_brew)
-    if [ -n "$brew_path" ]; then
-	brew install highlight
+    brew=$(find_brew)
+    if [ -n "$brew" ]; then
+	$brew install highlight
     fi
 fi
