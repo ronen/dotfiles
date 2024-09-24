@@ -3,6 +3,7 @@ alias g=git
 alias j=jobs
 alias lf='ls --color -F'
 alias ll='ls -l'
+alias ls='lf'
 alias sc='source ~/.zshrc ; source ~/.zshenv'
 alias po=popd
 
