@@ -1,5 +1,7 @@
 alias d='dirs -v'
 alias g=git
-alias pu=pushd
-alias po=popd
+alias j=jobs
 alias lf='ls --color -F'
+alias ll='ls -l'
+alias po=popd
+alias pu=pushd
