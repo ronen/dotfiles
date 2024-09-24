@@ -5,6 +5,10 @@ zstyle :compinstall filename '/home/ronen/.zshrc'
 autoload -Uz compinit
 compinit
 
+# make ^W only delete alphanumerics
+autoload -Uz select-word-style
+select-word-style bash
+
 source ~/.alias
 
 if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
