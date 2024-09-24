@@ -1,17 +1,10 @@
-function getHostname()
-    local f = io.popen ("/bin/hostname")
-    local hostname = f:read("*a") or ""
-    f:close()
-    hostname =string.gsub(hostname, "\n$", "")
-    return hostname
-end
-
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
-if getHostname() == 'penguin' then
-    config.enable_wayland = false
-end
+config.enable_wayland = false
+config.font_size = 10
+config.adjust_window_size_when_changing_font_size = false
+config.scrollback_lines = 3000
+config.default_workspace = "main"
 
--- and finally, return the configuration to wezterm
 return config
