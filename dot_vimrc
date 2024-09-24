@@ -1,0 +1,284 @@
+"
+" Generic options
+"
+set nocompatible
+set autochdir
+syntax on
+filetype on
+filetype indent on
+filetype plugin on
+if has('nvim')
+  " restore traditional (albeit inconsistent) behavior of Y key
+  unmap Y
+end
+
+call plug#begin('~/.vim/plugged')
+" Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+"Plug 'Horosphere/formatGen'
+"Plug 'JamshedVesuna/vim-markdown-preview'
+"Plug 'keith/swift.vim'
+"Plug 'scrooloose/nerdtree'
+"Plug 'tikhomirov/vim-glsl'
+"Plug 'adelarsq/vim-matchit'
+Plug 'Yggdroot/indentLine'
+Plug 'andymass/vim-matchup'
+Plug 'dense-analysis/ale'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'github/copilot.vim'
+Plug 'hashivim/vim-terraform'
+Plug 'junegunn/vim-easy-align'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'ryym/vim-riot'
+Plug 'tpope/vim-abolish'
+Plug 'vim-python/python-syntax'
+Plug 'vitalk/vim-shebang'
+call plug#end()
+
+:set nobackup
+:set cpoptions+=r$
+:set shortmess=atW
+:set noinsertmode
+:set noshowmode
+:set visualbell
+:set ai sw=4 sm shiftround notitle tildeop tw=75 expandtab
+:set matchpairs=(:),[:],{:},<:>
+:set wildchar=9
+:set tagrelative
+:set tags=./tags,tags,../tags,../../tags,../../../tags
+:set formatoptions=tcrq2
+":set guifont=screen10,-sgi-screen-medium-r-normal-*-*-100-*-*-m-*-iso8859-1
+:set guifont=Hack:h10
+"
+" Keyboard mappings
+"
+:map <space> <c-w><c-w>
+:map <S-CR>   <CR>
+":map <c-w>h  :call EditPairFile(1)<CR>
+":map gh      :call EditPairFile(0)<CR>
+:map gi      :set invhls<CR>
+:map gl      :files<CR>:e #
+:map go      :call DeleteHiddenBuffers()<CR>
+:map gs      :files<CR>:sp #
+:map gw      :set invwrap<CR>
+:map <S-D-[> :tabprev<CR>
+:map <S-D-]> :tabnext<CR>
+:map <S-D-{> :tabprev<CR>
+:map <S-D-}> :tabnext<CR>
+:map <D-{>   :tabprev<CR>
+:map <D-}>   :tabnext<CR>
+
+" For the IndentLines plugin
+:let g:indentLine_color_gui = "Grey90"
+:let g:indentLine_enabled = 0
+:map gt     :IndentLinesToggle<CR>
+
+" For vim-markdown-preview
+let vim_markdown_preview_github=1
+
+" For vim-easy-align
+"Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" For Copilot
+imap <C-Right> <Plug>(copilot-accept-word)
+imap <C-S-Right> <Plug>(copilot-accept-line)
+imap <C-S-]> <Plug>(copilot-next)
+imap <C-S-[> <Plug>(copilot-previous)
+imap <C-S-Up> <Plug>(copilot-suggest)
+
+" For ale
+let g:ale_linters = {
+\   'html': ['eslint'],
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint', 'tsserver'],
+\   'python': ['pylint'],
+\   'cpp': ['clangtidy'],
+\   'rust': ['cargo', 'rls', 'clippy'],
+\   'go': ['golangci-lint', 'gofmt'],
+\}
+let g:ale_fixers = {
+\   'html': ['eslint'],
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'go': ['gofmt', 'goimports']
+\}
+let g:ale_linter_aliases = {'riot': 'javascript'}
+let g:ale_cpp_clangtidy_executable = 'clang-tidy-9.0.0'
+let g:ale_cpp_clangtidy_options = '-Isrc -I../src -I../../src -I../../../src -I../../../../src'
+let g:ale_go_golangci_lint_options = ''
+let g:ale_rust_cargo_use_clippy = 1
+nmap <silent> <D-K> <Plug>(ale_previous)
+nmap <silent> <D-J> <Plug>(ale_next)
+nmap <silent> <D-k> <Plug>(ale_previous)
+nmap <silent> <D-j> <Plug>(ale_next)
+
+
+"
+" File-specific stuff
+"
+autocmd BufNewFile,BufReadPost *.md setlocal filetype=markdown
+autocmd BufNewFile,BufReadPost *.json.tpl set filetype=json
+" :au BufEnter *		:silent! lcd %:p:h
+:au BufEnter *		:let &titlestring = "vim: " . expand("%:p")
+:au BufEnter *.c   	:set cindent formatoptions=lcroq2
+:au BufEnter *.h   	:set cindent formatoptions=lcroq2
+:au BufEnter *.pl   	:set cindent formatoptions=lcroq2
+:au BufEnter *.rb   	:set cindent formatoptions=lcroq2 sw=2
+:au BufEnter *.svelte   :set sw=2 tw=0
+:au BufEnter Makefile*  :set noexpandtab
+:au BufNewFile,BufReadPost *.coffee setl shiftwidth=4 expandtab
+:au BufRead,BufNewFile *.make :set filetype=make
+:au BufRead,BufNewFile *.riot :set filetype=html
+
+" Type-specific settings
+augroup go_autocmd
+    autocmd!
+    autocmd FileType go :set noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+    autocmd FileType go :map <buffer> <C-K> :ALEFix<cr>
+augroup END
+
+augroup make_autocmd
+    autocmd!
+    au FileType make        :set noexpandtab shiftwidth=8
+augroup END
+
+augroup js_autocmd
+    autocmd!
+    autocmd FileType javascript :map <buffer> <C-K> :ALEFix<cr>
+    autocmd FileType javascript :set sw=2 tw=0
+augroup END
+
+augroup ts_autocmd
+    autocmd!
+    autocmd FileType typescript :map <buffer> <C-K> :ALEFix<cr>
+    autocmd FileType typescript :set sw=2
+augroup END
+
+augroup cpp_autocmd
+    autocmd!
+    autocmd FileType cpp :set cindent formatoptions=lcroq2
+    autocmd FileType cpp :map <buffer> <C-K> :py3f /usr/local/share/clang/clang-format.py<cr>
+    autocmd FileType cpp :imap <buffer> <C-K> <c-o>:py3f /usr/local/share/clang/clang-format.py<cr>
+augroup END
+
+augroup python_autocmd
+    autocmd!
+    autocmd FileType python set tw=0
+    autocmd FileType python :vmap <buffer> <C-K> !isort --virtual-env `ruby -r Pathname -e 'puts Pathname.pwd.ascend.find{\|p\|p.glob("{.,}venv").first}'` -<cr>
+    autocmd FileType python let g:python_highlight_all=1
+augroup END
+
+augroup json_autocmd
+  autocmd!
+  autocmd FileType json set autoindent
+  autocmd FileType json set formatoptions=tcq2l
+  autocmd FileType json set textwidth=78 shiftwidth=2
+  autocmd FileType json set softtabstop=2 tabstop=8
+  autocmd FileType json set expandtab
+  autocmd FileType json set foldmethod=syntax
+augroup END
+
+augroup XML
+    autocmd!
+    autocmd FileType xml let g:xml_syntax_folding=1
+    autocmd FileType xml setlocal foldmethod=syntax
+    autocmd FileType xml :syntax on
+    autocmd FileType xml :%foldopen!
+augroup END
+
+"
+" Local functions
+
+
+" Stay in same place when pressing escape in incremental searvh
+:cnoremap <expr> <c-y> <SID>search_cr("\<c-y>", getcmdtype(), getcmdline())
+:function! s:search_cr(cmd, type, line)
+:  let [key, s:pos, s:search] = [a:cmd, getpos('.'), a:line]
+:  if a:type == '/' || a:type == '?'
+:    let key = "\<c-c>"
+:    augroup search_cr
+:      autocmd!
+:      autocmd CmdlineLeave * execute "autocmd! search_cr" |
+:            \ call setpos('.', s:pos) |
+:            \ call search(s:search, 'bcW')
+:    augroup END
+:  endif
+:  return key
+:endfunction
+
+" delete all hidden buffers
+:function! DeleteHiddenBuffers()
+:  let bmax=bufnr("$")
+:  let bstart=0
+:  let bend=0
+:  let b=1
+:  while b <= bmax
+:     if BufferIsVisible(b)
+:       if bstart != 0
+:         exec ":" bstart "," bend "bdelete"
+:         let bstart=0
+:       endif
+:     elseif bufexists(b)
+:       let bend=b
+:       if bstart == 0
+:         let bstart=b
+:       endif
+:     endif
+:     let b=b+1
+:  endwhile
+:  if bstart != 0
+:     exec ":" bstart "," bend "bdelete"
+:  endif
+:endfunction
+"
+" returns true if buffer is showing in a window, false otherwise
+:function! BufferIsVisible(b)
+:  let w=1
+:  while 1
+:    let wb = winbufnr(w)
+:    if wb == a:b
+:       return 1
+:    endif
+:    if wb == -1
+:       return 0
+:    endif
+:    let w=w+1
+:  endwhile
+:endfunction
+"
+""""""" Returns the "pair file name" for the current buffer, e.g. 
+""""""" if editing "foo.cpp" returns "foo.h" and vice versa
+:function GetPairFileName()
+:  let root = expand("%:r")
+:  let ext = expand("%:e")
+:  let newExt = "cpp"
+:  if ext == "cpp" 
+:     let newExt = "h"
+:  endif
+:  let file = root.".".newExt
+:  return file
+:endfunction
+""""""" Edits the "pair file" as described above.  Uses :b if the 
+""""""" buffer already exists, else :e.  If otherWin == 1, then 
+""""""" edit the file in the next window, or open a new window if
+""""""" if only one exists.
+:function EditPairFile(otherWin)
+:  let file = GetPairFileName()
+:  if a:otherWin == 1
+:      if winbufnr(2) == -1
+:         :sp
+:      else
+:         :norm 
+:      endif
+:  endif
+:  if bufexists(file)
+:     exe ":b" file
+:  else
+:     exe ":e" file
+:  endif
+:endfunction
