@@ -3,5 +3,17 @@ alias g=git
 alias j=jobs
 alias lf='ls --color -F'
 alias ll='ls -l'
+alias sc='source ~/.zshrc ; source ~/.zshenv'
 alias po=popd
-alias pu=pushd
+
+#unalias pu
+function pu() { # this implements tcsh's "dextract" behavior.  it presupposes pushdminus is *not* set
+  if (( ${#*} == 1 )) && [[ $1 =~ '^\+' ]] ; then
+    dirlist=("${(@f)$(dirs -p)}")
+    newdir=$dirlist[$(( $1 + 1 ))]
+    builtin popd $1
+    builtin pushd ${~newdir}
+  else
+    builtin pushd $*
+  fi
+}

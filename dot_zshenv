@@ -1,7 +1,6 @@
+export LESS=iMqeRX
+export LESSOPEN=
 if [ -x "$(command -v highlight)" ]; then
-    export LESS="-RX"
+    export LESS="${LESS}R"
     export LESSOPEN="| highlight -O xterm256 --force %s"
-else
-    export LESS="-X"
-    export LESSOPEN=
 fi

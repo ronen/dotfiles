@@ -5,9 +5,13 @@ zstyle :compinstall filename '/home/ronen/.zshrc'
 autoload -Uz compinit
 compinit
 
+setopt ignoreeof
+
 # make ^W only delete alphanumerics
 autoload -Uz select-word-style
 select-word-style bash
+
+autoload -Uz regexp-replace
 
 source ~/.alias
 
