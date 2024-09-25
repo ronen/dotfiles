@@ -1,6 +1,7 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+
 zstyle :compinstall filename '/home/ronen/.zshrc'
 autoload -Uz compinit
 compinit
@@ -27,3 +28,6 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+if [ -x $(command -v direnv >& /dev/null) ]; then
+    eval "$(direnv hook zsh)"
+fi
