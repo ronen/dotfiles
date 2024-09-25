@@ -24,3 +24,6 @@ export PATH="$HOME/.local/bin:${PATH}"
 if [ -x $(command -v starship >& /dev/null) ]; then
     eval "$(starship init zsh)"
 fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
