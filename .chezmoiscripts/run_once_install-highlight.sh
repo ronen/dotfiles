@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 function find_brew() {
     # Define standard installation locations for Homebrew
