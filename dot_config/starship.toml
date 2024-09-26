@@ -17,9 +17,13 @@ error_symbol =  '[\$](bold red)'
 
 [directory]
 style = "navy bold"
+truncation_symbol = '…/'
 
 [package]
 disabled = true
 
 [battery]
+disabled = true
+
+[nodejs]
 disabled = true
