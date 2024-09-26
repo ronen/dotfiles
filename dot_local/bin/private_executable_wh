@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+$sep = ':';
+$sep = ';' if $^O =~ /Win/;
+
+foreach $arg (@ARGV) {
+    foreach $dir (split($sep, $ENV{'PATH'})) {
+	opendir(DIR,"$dir");
+	foreach  (readdir(DIR)) {
+	    print "$dir/$_\n" if /$arg/ && !$seen{"$dir/$_"}++;
+	}
+    }
+}
