@@ -1,0 +1,121 @@
+#!/usr/bin/perl
+#
+# rename [-cfv] from to files
+
+
+#########################################################
+# getopts.pl was removed from the standard distribution as of perl5.16
+# pasting it in here.  should really switch this script to not use it.
+#require 'getopts.pl';
+
+;# getopts.pl - a better getopt.pl
+
+;# Usage:
+;#      do Getopts('a:bc');  # -a takes arg. -b & -c not. Sets opt_* as a
+;#                           #  side effect.
+
+sub Getopts {
+    local($argumentative) = @_;
+    local(@args,$_,$first,$rest);
+    local($errs) = 0;
+
+    @args = split( / */, $argumentative );
+    while(@ARGV && ($_ = $ARGV[0]) =~ /^-(.)(.*)/) {
+	($first,$rest) = ($1,$2);
+	$pos = index($argumentative,$first);
+	if($pos >= 0) {
+	    if($pos < $#args && $args[$pos+1] eq ':') {
+		shift(@ARGV);
+		if($rest eq '') {
+		    ++$errs unless @ARGV;
+		    $rest = shift(@ARGV);
+		}
+		${"opt_$first"} = $rest;
+	    }
+	    else {
+		${"opt_$first"} = 1;
+		if($rest eq '') {
+		    shift(@ARGV);
+		}
+		else {
+		    $ARGV[0] = "-$rest";
+		}
+	    }
+	}
+	else {
+	    print STDERR "Unknown option: $first\n";
+	    ++$errs;
+	    if($rest ne '') {
+		$ARGV[0] = "-$rest";
+	    }
+	    else {
+		shift(@ARGV);
+	    }
+	}
+    }
+    $errs == 0;
+}
+
+#########################################################
+
+#
+#
+
+&Getopts('cvfngGr:') || $err++;
+$from = shift;
+$to = shift;
+$err++ unless @ARGV;
+
+if ($err) {
+    print "Usage: rename [options] from to files\n";
+    print "options:\n";
+    print "     -c      copy rather than rename\n";
+    print "     -f      force existing files to be replaced\n";
+    print "     -g      change all occurrences in each filename\n";
+    print "     -n      no execute -- just list what would be done\n";
+    print "     -r cmd  use the given command rather than rename\n";
+    print "     -G      use 'git mv' rather than rename\n";
+    print "     -v      verbose; list each file processed\n";
+    exit -1;
+}
+
+local ($CMD) = undef;
+$CMD = "cp" if $opt_c;
+$CMD = "git mv" if $opt_G;
+$CMD = $opt_r if $opt_r;
+
+sub ren {
+    my ($from, $to) = @_;
+    my ($cmd);
+
+    if ($CMD) {
+        $cmd = "$CMD $from $to";
+        system($cmd) unless $opt_n;
+    }
+    else {
+        $cmd = "rename $from $to";
+        rename($from,$to) unless $opt_n;
+    }
+    print "$cmd\n" if $opt_v or $opt_n;
+}
+
+for (@ARGV) {
+    $was = $_;
+    if ($opt_g) {
+	eval "s{\$from}{$to}og";
+    }
+    else {
+	eval "s{\$from}{$to}o";
+    }
+    die $@ if $@;
+
+    if ($was eq $_) {
+	print "$vmsg no change\n" if ($opt_v);
+    }
+    elsif (-e $_ && !$opt_f) {
+	print "rename $was to $_: file '$_' already exists\n";
+    }
+    else {
+        ren($was, $_);
+    }
+}
