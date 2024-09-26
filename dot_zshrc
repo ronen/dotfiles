@@ -9,6 +9,8 @@ compinit
 setopt ignoreeof
 setopt noclobber
 setopt notify
+setopt pushd_ignore_dups
+setopt pushd_silent
 
 # make ^W only delete alphanumerics
 autoload -Uz select-word-style

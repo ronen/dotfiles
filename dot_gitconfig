@@ -4,7 +4,26 @@
 
 [includeIf "hasconfig:remote.*.url:https://github.com/drawbridgelabs/**"]
 	path = ".config/git/drawbridge-config"
+
 [alias]
+        brdm = !sh -c \"git branch --merged | grep -v '\\*' | grep -v -w main | xargs -n 1 git branch -d\"
 	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+        showtool = "!git difftool $1^ $1 #"
         sw = switch
+
+[diff]
+	tool = Kaleidoscope
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+	trustExitCode = true
+
+[merge]
+	tool = Kaleidoscope
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[mergetool]
+	prompt = false
