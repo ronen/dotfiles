@@ -27,3 +27,6 @@ disabled = true
 
 [nodejs]
 disabled = true
+
+[git_branch]
+format = " [$symbol$branch(:$remote_branch)]($style) "
