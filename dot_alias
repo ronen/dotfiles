@@ -18,3 +18,35 @@ function pu() { # this implements tcsh's "dextract" behavior.  it presupposes pu
     builtin pushd $*
   fi
 }
+
+function gvimr() { gvim --remote-silent $* }
+function rm() { move_with_backup ~/.Trash $* }
+
+# Moves one or more files to a directory, renaming existing files with an
+# incrementing .number suffix
+function move_with_backup() {
+  local dest_dir="$1"
+  shift  # shift the arguments so that $@ refers to the list of files
+  
+  for src_file in "$@"; do
+    local filename="${src_file:t}"  # extract the filename from the source
+    local dest_path="$dest_dir/$filename"
+
+    # If a file with the same name exists in the destination, rename the existing file
+    if [[ -e "$dest_path" ]]; then
+      local new_path="$dest_path"
+      local num=1
+      # Find a new name for the existing file by appending an incremented number
+      while [[ -e "$new_path" ]]; do
+        new_path="$dest_path.$num"
+        ((num++))
+      done
+      mv "$dest_path" "$new_path"
+      echo "Existing $dest_path moved to $new_path"
+    fi
+
+    # Now move the source file to the destination (keeping its original name)
+    mv "$src_file" "$dest_path"
+  done
+}
+

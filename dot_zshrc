@@ -7,6 +7,8 @@ autoload -Uz compinit
 compinit
 
 setopt ignoreeof
+setopt noclobber
+setopt notify
 
 # make ^W only delete alphanumerics
 autoload -Uz select-word-style
