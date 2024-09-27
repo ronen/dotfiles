@@ -8,6 +8,7 @@ alias ll='lf -l'
 alias ls='lf'
 alias sc='source ~/.zshrc ; source ~/.zshenv'
 alias po=popd
+alias npm-workspaces='npm query .workspace | jq -r ".[].location"'
 
 #unalias pu
 function pu() { # this implements tcsh's "dextract" behavior.  it presupposes pushdminus is *not* set
