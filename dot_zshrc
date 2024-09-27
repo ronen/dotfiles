@@ -1,6 +1,6 @@
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+export HISTFILE=~/.histfile
+export HISTSIZE=1000
+export SAVEHIST=1000
 
 zstyle :compinstall filename '/home/ronen/.zshrc'
 autoload -Uz compinit

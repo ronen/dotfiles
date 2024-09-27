@@ -1,14 +1,16 @@
-alias pup='pu ${$(npm root):h}'
-alias pur='pu $(git rev-parse --show-toplevel)'
 alias d='dirs -v'
 alias g=git
+alias h='history | less'
+alias history='history 1'
 alias j=jobs
 alias lf='"ls" --color -F'
 alias ll='lf -l'
 alias ls='lf'
-alias sc='source ~/.zshrc ; source ~/.zshenv'
-alias po=popd
 alias npm-workspaces='npm query .workspace | jq -r ".[].location"'
+alias po=popd
+alias pup='pu ${$(npm root):h}'
+alias pur='pu $(git rev-parse --show-toplevel)'
+alias sc='source ~/.zshrc ; source ~/.zshenv'
 
 #unalias pu
 function pu() { # this implements tcsh's "dextract" behavior.  it presupposes pushdminus is *not* set
@@ -31,7 +33,7 @@ function rm() { move_with_backup ~/.Trash $* }
 function move_with_backup() {
   local dest_dir="$1"
   shift  # shift the arguments so that $@ refers to the list of files
- 
+
   for src_file in "$@"; do
     local filename="${src_file:t}"  # extract the filename from the source
     local dest_path="$dest_dir/$filename"
