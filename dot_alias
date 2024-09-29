@@ -7,6 +7,7 @@ alias lf='"ls" --color -F'
 alias ll='lf -l'
 alias ls='lf'
 alias npm-workspaces='npm query .workspace | jq -r ".[].location"'
+alias npr='npm run'
 alias po=popd
 alias pup='pu ${$(npm root):h}'
 alias pur='pu $(git rev-parse --show-toplevel)'
