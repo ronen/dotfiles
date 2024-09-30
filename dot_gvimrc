@@ -2,3 +2,34 @@
 :set title
 :se guioptions-=T
 :se guifont=Hack:h10
+
+let g:light_theme = 'macvim'
+let g:dark_theme = 'industry'
+
+func! s:SetTheme()
+    let s:theme = g:light_theme
+
+    if (v:os_appearance == 1 || v:os_appearance == 3)
+        let s:theme = g:dark_theme
+        set background=dark
+    else
+        set background=light
+    endif
+
+    execute 'colorscheme ' . s:theme
+
+    " Ensure we re-init lightline
+    "let g:lightline.colorscheme = s:theme
+    "call lightline#init()
+    "call lightline#colorscheme()
+    "call lightline#update()
+
+    redraw!
+endfunc
+
+call s:SetTheme()
+
+augroup AutoDark
+autocmd!
+autocmd OSAppearanceChanged \* call s:SetTheme()
+augroup END
