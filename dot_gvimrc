@@ -29,7 +29,7 @@ endfunc
 "call s:SetTheme()
 " seems that v:os_appearance is not set yet, so need to introduce a small
 " delay
-call timer_start(100, 's:SetTheme', {'repeat': 1})
+call timer_start(300, 's:SetTheme', {'repeat': 1})
 
 augroup AutoDark
 autocmd!
