@@ -11,6 +11,7 @@ alias npr='npm run'
 alias po=popd
 alias pup='pu ${$(npm root):h}'
 alias pur='pu $(git rev-parse --show-toplevel)'
+alias rrm=/bin/rm
 alias sc='source ~/.zshrc ; source ~/.zshenv'
 
 #unalias pu

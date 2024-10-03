@@ -13,7 +13,7 @@ if has('nvim')
 end
 
 call plug#begin('~/.vim/plugged')
-" Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 "Plug 'Horosphere/formatGen'
 "Plug 'JamshedVesuna/vim-markdown-preview'
 "Plug 'keith/swift.vim'
