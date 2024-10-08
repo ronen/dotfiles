@@ -112,6 +112,7 @@ let g:ale_cpp_clangtidy_executable = 'clang-tidy-9.0.0'
 let g:ale_cpp_clangtidy_options = '-Isrc -I../src -I../../src -I../../../src -I../../../../src'
 let g:ale_go_golangci_lint_options = ''
 let g:ale_rust_cargo_use_clippy = 1
+let g:ale_javascript_eslint_options = '--cache --cache-location /tmp/.eslintcache'
 nmap <silent> <D-K> <Plug>(ale_previous)
 nmap <silent> <D-J> <Plug>(ale_next)
 nmap <silent> <D-k> <Plug>(ale_previous)
@@ -282,3 +283,18 @@ augroup END
 :     exe ":e" file
 :  endif
 :endfunction
+
+""""""" Function to map <C-]> and <C-^> to ALE's LSP commands if
+""""""" the current buffer has an LSP linter.
+function ALELSPMappings()
+	let l:lsp_found=0
+	for l:linter in ale#linter#Get(&filetype) | if !empty(l:linter.lsp) | let l:lsp_found=1 | endif | endfor
+	if (l:lsp_found)
+		nnoremap <buffer> <C-]> :ALEGoToDefinition<CR>
+		nnoremap <buffer> <C-^> :ALEFindReferences<CR>
+	else
+		silent! unmap <buffer> <C-]>
+		silent! unmap <buffer> <C-^>
+	endif
+endfunction
+autocmd BufRead,FileType * call ALELSPMappings()
