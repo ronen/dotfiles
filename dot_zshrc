@@ -18,13 +18,14 @@ select-word-style bash
 
 autoload -Uz regexp-replace
 
-source ~/.alias
-
 if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
 fi
 
 export PATH="$HOME/.local/bin:${PATH}"
+
+source ~/.environ
+source ~/.alias
 
 if [ -x $(command -v starship >& /dev/null) ]; then
     eval "$(starship init zsh)"
