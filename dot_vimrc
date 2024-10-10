@@ -95,7 +95,7 @@ imap <C-S-Up> <Plug>(copilot-suggest)
 let g:ale_linters = {
 \   'html': ['eslint'],
 \   'javascript': ['eslint'],
-\   'typescript': ['eslint', 'tsserver'],
+\   'typescript': ['tsserver', 'eslint'],
 \   'python': ['pylint'],
 \   'cpp': ['clangtidy'],
 \   'rust': ['cargo', 'rls', 'clippy'],
@@ -112,7 +112,6 @@ let g:ale_cpp_clangtidy_executable = 'clang-tidy-9.0.0'
 let g:ale_cpp_clangtidy_options = '-Isrc -I../src -I../../src -I../../../src -I../../../../src'
 let g:ale_go_golangci_lint_options = ''
 let g:ale_rust_cargo_use_clippy = 1
-let g:ale_javascript_eslint_options = '--cache --cache-location /tmp/.eslintcache'
 nmap <silent> <D-K> <Plug>(ale_previous)
 nmap <silent> <D-J> <Plug>(ale_next)
 nmap <silent> <D-k> <Plug>(ale_previous)

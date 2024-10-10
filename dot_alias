@@ -12,7 +12,7 @@ alias po=popd
 alias pup='pu ${$(npm root):h}'
 alias pur='pu $(git rev-parse --show-toplevel)'
 alias rrm=/bin/rm
-alias sc='source ~/.zshrc ; source ~/.zshenv'
+alias sc='source ~/.zshrc'
 
 #unalias pu
 function pu() { # this implements tcsh's "dextract" behavior.  it presupposes pushdminus is *not* set
