@@ -9,8 +9,9 @@ alias ls='lf'
 alias npm-workspaces='npm query .workspace | jq -r ".[].location"'
 alias npr='npm run'
 alias po=popd
-alias pup='pu ${$(npm root):h}'
-alias pur='pu $(git rev-parse --show-toplevel)'
+alias pup='pu ${$(npm root):h}' # pushd to the root of the current npm project (root of monorepo if there is one)
+alias pur='pu ${$(find_nearest_file package.json):h}' # pushd to the nearest directory containing a package.json
+alias pug='pu $(git rev-parse --show-toplevel)' # pushd to the root of the current git repo
 alias rrm=/bin/rm
 alias sc='source ~/.zshrc'
 
@@ -58,3 +59,16 @@ function move_with_backup() {
   done
 }
 
+# Find the nearest file with the given name in the current directory or any parent directories
+function find_nearest_file() {
+  local filename=$1
+  local dir=$PWD
+  while [[ $dir != "/" ]]; do
+    if [[ -e "$dir/$filename" ]]; then
+      echo "$dir/$filename"
+      return 0
+    fi
+    dir=$(dirname "$dir")
+  done
+  return 1
+}
