@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+commands=(
+    "highlight"
+    "direnv"
+)
+
 function find_brew() {
     # Define standard installation locations for Homebrew
     local brew_locations=(
@@ -21,9 +26,11 @@ function find_brew() {
     echo ""
 }
 
-if ! command -v highlight >/dev/null 2>&1; then 
-    brew=$(find_brew)
-    if [ -n "$brew" ]; then
-	$brew install highlight
-    fi
+brew=$(find_brew)
+if [ -n "$brew" ]; then
+    for command in "${commands[@]}"; do
+        if ! command -v "$command" &> /dev/null; then
+            "$brew" install "$command"
+        fi
+    done
 fi
