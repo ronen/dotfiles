@@ -12,6 +12,9 @@
         showtool = "!git difftool $1^ $1 #"
         sw = switch
 
+[core]
+        excludesfile = /Users/ronen/.gitignore
+
 [diff]
 	tool = Kaleidoscope
 [difftool "Kaleidoscope"]
