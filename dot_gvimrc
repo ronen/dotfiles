@@ -14,21 +14,18 @@ func! s:SetTheme(...)
     let s:theme = g:light_theme
     echomsg 'os_appearance: ' . v:os_appearance
     if (v:os_appearance == 1 || v:os_appearance == 3)
-        echomsg 'choosing dark'
         let s:theme = g:dark_theme
         set background=dark
     else
-        echomsg 'choosing light'
         set background=light
     endif
-    echomsg 'Setting theme to ' . s:theme
     execute 'colorscheme ' . s:theme
 endfunc
 
 "call s:SetTheme()
 " seems that v:os_appearance is not set yet, so need to introduce a small
 " delay
-call timer_start(300, 's:SetTheme', {'repeat': 1})
+call timer_start(400, 's:SetTheme', {'repeat': 1})
 
 augroup AutoDark
 autocmd!

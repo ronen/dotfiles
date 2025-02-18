@@ -13,13 +13,16 @@ if has('nvim')
 end
 
 call plug#begin('~/.vim/plugged')
-"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 "Plug 'Horosphere/formatGen'
 "Plug 'JamshedVesuna/vim-markdown-preview'
+"Plug 'adelarsq/vim-matchit'
 "Plug 'keith/swift.vim'
+"Plug 'mattn/vim-lsp-settings'
+"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+"Plug 'prabirshrestha/vim-lsp'
+"Plug 'rhysd/vim-lsp-ale'
 "Plug 'scrooloose/nerdtree'
 "Plug 'tikhomirov/vim-glsl'
-"Plug 'adelarsq/vim-matchit'
 Plug 'Yggdroot/indentLine'
 Plug 'andymass/vim-matchup'
 Plug 'dense-analysis/ale'
@@ -95,7 +98,7 @@ imap <C-S-Up> <Plug>(copilot-suggest)
 let g:ale_linters = {
 \   'html': ['eslint'],
 \   'javascript': ['eslint'],
-\   'typescript': ['tsserver', 'eslint'],
+\   'typescript': ['eslint', 'tsserver'],
 \   'python': ['pylint'],
 \   'cpp': ['clangtidy'],
 \   'rust': ['cargo', 'rls', 'clippy'],
@@ -116,7 +119,6 @@ nmap <silent> <D-K> <Plug>(ale_previous)
 nmap <silent> <D-J> <Plug>(ale_next)
 nmap <silent> <D-k> <Plug>(ale_previous)
 nmap <silent> <D-j> <Plug>(ale_next)
-
 
 "
 " File-specific stuff
