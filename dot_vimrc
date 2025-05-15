@@ -13,17 +13,18 @@ if has('nvim')
 end
 
 call plug#begin('~/.vim/plugged')
+"Plug 'adelarsq/vim-matchit'
+"Plug 'codechips/coc-svelte', {'do': 'npm install'}
 "Plug 'Horosphere/formatGen'
 "Plug 'JamshedVesuna/vim-markdown-preview'
-"Plug 'adelarsq/vim-matchit'
 "Plug 'keith/swift.vim'
 "Plug 'mattn/vim-lsp-settings'
+"Plug 'neoclide/coc.nvim'
 "Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 "Plug 'prabirshrestha/vim-lsp'
 "Plug 'rhysd/vim-lsp-ale'
 "Plug 'scrooloose/nerdtree'
 "Plug 'tikhomirov/vim-glsl'
-Plug 'Yggdroot/indentLine'
 Plug 'andymass/vim-matchup'
 Plug 'dense-analysis/ale'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
@@ -34,10 +35,13 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'ronen/colorswitch-themes'
+Plug 'ronen/colorswitch'
 Plug 'ryym/vim-riot'
 Plug 'tpope/vim-abolish'
 Plug 'vim-python/python-syntax'
 Plug 'vitalk/vim-shebang'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 :set nobackup
@@ -96,19 +100,21 @@ imap <C-S-Up> <Plug>(copilot-suggest)
 
 " For ale
 let g:ale_linters = {
+\   'cpp': ['clangtidy'],
+\   'go': ['golangci-lint', 'gofmt'],
 \   'html': ['eslint'],
 \   'javascript': ['eslint'],
-\   'typescript': ['eslint', 'tsserver'],
 \   'python': ['pylint'],
-\   'cpp': ['clangtidy'],
 \   'rust': ['cargo', 'rls', 'clippy'],
-\   'go': ['golangci-lint', 'gofmt'],
+\   'svelte': ['svelteserver', 'eslint'],
+\   'typescript': ['tsserver', 'eslint']
 \}
 let g:ale_fixers = {
+\   'go': ['gofmt', 'goimports'],
 \   'html': ['eslint'],
 \   'javascript': ['eslint'],
-\   'typescript': ['eslint'],
-\   'go': ['gofmt', 'goimports']
+\   'svelte': ['eslint'],
+\   'typescript': ['eslint']
 \}
 let g:ale_linter_aliases = {'riot': 'javascript'}
 let g:ale_cpp_clangtidy_executable = 'clang-tidy-9.0.0'
@@ -192,6 +198,14 @@ augroup XML
     autocmd FileType xml :syntax on
     autocmd FileType xml :%foldopen!
 augroup END
+
+augroup svelte
+    autocmd!
+    autocmd FileType svelte :set sw=2 tw=0
+    autocmd FileType svelte :map <buffer> <C-K> :ALEFix<cr>
+    autocmd FileType svelte :let b:ale_linters = ['svelteserver', 'eslint']
+augroup END
+
 
 "
 " Local functions

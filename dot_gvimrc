@@ -2,33 +2,5 @@
 :se guioptions-=T
 :se guifont=Hack:h10
 
-let g:light_theme = 'macvim'
-
-"let g:dark_theme = 'industry'
-"let g:dark_theme = 'koehler'
-"let g:dark_theme = 'murphy'
-let g:dark_theme = 'sorbet'
-"let g:dark_theme = 'torte'
-
-func! s:SetTheme(...)
-    let s:theme = g:light_theme
-    echomsg 'os_appearance: ' . v:os_appearance
-    if (v:os_appearance == 1 || v:os_appearance == 3)
-        let s:theme = g:dark_theme
-        set background=dark
-    else
-        set background=light
-    endif
-    execute 'colorscheme ' . s:theme
-endfunc
-
-"call s:SetTheme()
-" seems that v:os_appearance is not set yet, so need to introduce a small
-" delay
-call timer_start(400, 's:SetTheme', {'repeat': 1})
-
-augroup AutoDark
-autocmd!
-autocmd OSAppearanceChanged \* call s:SetTheme()
-autocmd OSAppearanceChanged \* execute 'redraw!'
-augroup END
+let g:colorswitch_light = 'macvim-light-switchable'
+let g:colorswitch_dark  = 'sorbet-switchable'
