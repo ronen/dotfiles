@@ -27,7 +27,7 @@ call plug#begin('~/.vim/plugged')
 "Plug 'tikhomirov/vim-glsl'
 Plug 'andymass/vim-matchup'
 Plug 'dense-analysis/ale'
-Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'leafOfTree/vim-svelte-plugin'
 Plug 'github/copilot.vim'
 Plug 'hashivim/vim-terraform'
 Plug 'junegunn/vim-easy-align'
@@ -116,21 +116,29 @@ let g:ale_fixers = {
 \   'svelte': ['eslint'],
 \   'typescript': ['eslint']
 \}
-let g:ale_linter_aliases = {'riot': 'javascript'}
+
+let g:ale_linter_aliases = { 'riot': 'javascript', 'svelte': ['svelte', 'css', 'javascript', 'typescript', 'html'] }
 let g:ale_cpp_clangtidy_executable = 'clang-tidy-9.0.0'
 let g:ale_cpp_clangtidy_options = '-Isrc -I../src -I../../src -I../../../src -I../../../../src'
 let g:ale_go_golangci_lint_options = ''
 let g:ale_rust_cargo_use_clippy = 1
+
+" for vim-svelte-plugin
+let g:vim_svelte_plugin_use_typescript	= 1
+let g:vim_svelte_plugin_use_sass    = 1
+
 nmap <silent> <D-K> <Plug>(ale_previous)
 nmap <silent> <D-J> <Plug>(ale_next)
 nmap <silent> <D-k> <Plug>(ale_previous)
 nmap <silent> <D-j> <Plug>(ale_next)
+
 
 "
 " File-specific stuff
 "
 autocmd BufNewFile,BufReadPost *.md setlocal filetype=markdown
 autocmd BufNewFile,BufReadPost *.json.tpl set filetype=json
+autocmd BufRead,BufNewFile *.svelte set filetype=svelte
 " :au BufEnter *		:silent! lcd %:p:h
 :au BufEnter *		:let &titlestring = "vim: " . expand("%:p")
 :au BufEnter *.c   	:set cindent formatoptions=lcroq2
@@ -142,6 +150,7 @@ autocmd BufNewFile,BufReadPost *.json.tpl set filetype=json
 :au BufNewFile,BufReadPost *.coffee setl shiftwidth=4 expandtab
 :au BufRead,BufNewFile *.make :set filetype=make
 :au BufRead,BufNewFile *.riot :set filetype=html
+
 
 " Type-specific settings
 augroup go_autocmd
